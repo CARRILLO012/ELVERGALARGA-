@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brawl Stars - Carrillo.0123</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8a2be2;
+            --secondary-color: #00bfff;
+            --accent-color: #ff00ff;
+            --dark-bg: #0a0a1a;
+            --darker-bg: #050510;
+            --light-text: #e0e0ff;
+            --neon-glow: 0 0 10px rgba(138, 43, 226, 0.8), 0 0 20px rgba(0, 191, 255, 0.6);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, var(--darker-bg), var(--dark-bg));
+            color: var(--light-text);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+        
+        /* Menú lateral */
+        .sidebar {
+            width: 250px;
+            background: rgba(10, 10, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(138, 43, 226, 0.3);
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+        
+        .logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo span {
+            display: block;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .menu {
+            list-style: none;
+            padding: 0 1rem;
+        }
+        
+        .menu li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .menu a {
+            display: block;
+            padding: 1rem;
+            text-decoration: none;
+            color: var(--light-text);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .menu a:hover {
+            background: rgba(138, 43, 226, 0.2);
+            border-left: 3px solid var(--primary-color);
+            transform: translateX(5px);
+        }
+        
+        .menu a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.5s;
+        }
+        
+        .menu a:hover:before {
+            left: 100%;
+        }
+        
+        .menu i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        /* Contenido principal */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            margin-left: 250px;
+        }
+        
+        .section {
+            background: rgba(10, 10, 26, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+        
+        /* Historia */
+        .history-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .history-text {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        /* Personajes */
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .character-card {
+            background: rgba(5, 5, 16, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        .character-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+        }
+        
+        .character-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .character-info {
+            padding: 1rem;
+        }
+        
+        .character-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        /* Modos de Juego */
+        .game-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .mode-card {
+            background: rgba(5, 5, 16, 0.8);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .mode-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+        
+        .mode-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        /* Videos */
+        .videos-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .video-container {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-container iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+        
+        .video-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(5, 5, 16, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+            margin-left: 250px;
+            font-size: 0.9rem;
+            color: rgba(224, 224, 255, 0.7);
+        }
+        
+        .copyright {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section {
+            animation: fadeIn 0.8s ease;
+        }
+        
+        /* Efectos de brillo */
+        .glow-effect {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.4) 0%, rgba(138, 43, 226, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            animation: float 8s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(50px, 50px); }
+            50% { transform: translate(100px, 0); }
+            75% { transform: translate(50px, -50px); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                padding: 1rem 0;
+            }
+            
+            .logo h1, .logo span, .menu a span {
+                display: none;
+            }
+            
+            .menu a {
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .menu i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+            
+            .content, footer {
+                margin-left: 70px;
+            }
+            
+            .characters-grid, .game-modes, .videos-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Efectos de brillo -->
+    <div class="glow-effect" style="top: 20%; left: 30%;"></div>
+    <div class="glow-effect" style="top: 60%; left: 70%;"></div>
+    <div class="glow-effect" style="top: 30%; left: 80%;"></div>
+    
+    <!-- Menú lateral -->
+    <div class="sidebar">
+        <div class="logo">
+            <h1>BRAWL STARS</h1>
+            <span>carrillo.0123</span>
+        </div>
+        <ul class="menu">
+            <li><a href="#historia"><i class="fas fa-history"></i> <span>Historia</span></a></li>
+            <li><a href="#personajes"><i class="fas fa-users"></i> <span>Personajes</span></a></li>
+            <li><a href="#modos"><i class="fas fa-gamepad"></i> <span>Modos de Juego</span></a></li>
+            <li><a href="#videos"><i class="fas fa-video"></i> <span>Videos</span></a></li>
+        </ul>
+    </div>
+    
+    <!-- Contenido principal -->
+    <div class="content">
+        <!-- Sección Historia -->
+        <section id="historia" class="section">
+            <h2 class="section-title">Historia de Brawl Stars</h2>
+            <div class="history-content">
+                <p class="history-text">
+                    Brawl Stars es un juego de acción multijugador desarrollado por Supercell. Ambientado en un universo de ciencia ficción, el juego sigue las aventuras de los Brawlers, personajes con habilidades únicas que compiten en diversos modos de juego.
+                </p>
+                <p class="history-text">
+                    La historia comienza cuando los Brawlers son liberados de sus cápsulas por el Dr. Lasha, un científico loco que busca crear el caos en el universo. Cada Brawler tiene su propia historia y motivaciones, desde la búsqueda de fama y fortuna hasta la protección de sus amigos.
+                </p>
+                <p class="history-text">
+                    A lo largo de sus aventuras, los Brawlers viajan por diferentes planetas y dimensiones, enfrentándose a peligrosos enemigos y desentrañando los misterios del universo de Brawl Stars. Con el tiempo, se revela una amenaza mayor: los robots de Mr. P, que buscan controlar el universo.
+                </p>
+            </div>
+        </section>
+        
+        <!-- Sección Personajes -->
+        <section id="personajes" class="section">
+            <h2 class="section-title">Personajes Principales</h2>
+            <div class="characters-grid">
+                <div class="character-card">
+                    <img src="https://images.unsplash.com/photo-1588421357574-87938a86fa28?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Shelly" class="character-img">
+                    <div class="character-info">
+                        <h3 class="character-name">Shelly</h3>
+                        <p>La Brawler inicial, una pirata con un poderoso cañón que dispara esferas de energía.</p>
+                    </div>
+                </div>
+                
+                <div class="character-card">
+                    <img src="https://images.unsplash.com/photo-1588421357574-87938a86fa28?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Leon" class="character-img">
+                    <div class="character-info">
+                        <h3 class="character-name">Leon</h3>
+                        <p>Un ninja furtivo que puede volverse invisible y atacar por sorpresa a sus enemigos.</p>
+                    </div>
+                </div>
+                
+                <div class="character-card">
+                    <img src="https://images.unsplash.com/photo-1588421357574-87938a86fa28?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="El Primo" class="character-img">
+                    <div class="character-info">
+                        <h3 class="character-name">El Primo</h3>
+                        <p>Un luchador de lucha libre que explota al tocar el suelo, causando daño en área.</p>
+                    </div>
+                </div>
+                
+                <div class="character-card">
+                    <img src="https://images.unsplash.com/photo-1588421357574-87938a86fa28?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Poco" class="character-img">
+                    <div class="character-info">
+                        <h3 class="character-name">Poco</h3>
+                        <p>Un músico que puede curar a sus aliados y ralentizar a los enemigos con sus notas musicales.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección Modos de Juego -->
+        <section id="modos" class="section">
+            <h2 class="section-title">Modos de Juego</h2>
+            <div class="game-modes">
+                <div class="mode-card">
+                    <h3 class="mode-title">Zona de Asalto</h3>
+                    <p>El modo principal del juego. Dos equipos compiten por controlar una zona central que aparece en el mapa. El equipo que acumule 10 puntos gana, obteniendo puntos al mantener la zona bajo su control.</p>
+                </div>
+                
+                <div class="mode-card">
+                    <h3 class="mode-title">Asalto por Equipos</h3>
+                    <p>Un modo clásico de 3v3 donde los equipos luchan por destruir la base enemiga. Los jugadores deben coordinarse para avanzar y proteger su propia base.</p>
+                </div>
+                
+                <div class="mode-card">
+                    <h3 class="mode-title">Supervivencia</h3>
+                    <p>Un modo de batalla real donde 10 jugadores luchan por ser el último en pie. Los jugadores pueden elegir entre diferentes habilidades especiales para personalizar su estilo de juego.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección Videos -->
+        <section id="videos" class="section">
+            <h2 class="section-title">Videos Destacados</h2>
+            <div class="videos-section">
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/4wG9GqW0j8M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <h3 class="video-title">Trailer Oficial de Brawl Stars</h3>
+                </div>
+                
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/JvQ8i6i6yQY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <h3 class="video-title">Gameplay - Zona de Asalto</h3>
+                </div>
+                
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/3u7J6XJ0Vq4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <h3 class="video-title">Eventos Especiales</h3>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>Derechos de autor © 2023 carrillo.0123</p>
+        <p class="copyright">Brawl Stars es una marca registrada de Supercell</p>
+    </footer>
+</body>
+</html>
